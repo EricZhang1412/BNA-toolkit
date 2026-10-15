@@ -1,0 +1,59 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bna-toolkit"
+version = "0.1.0"
+description = "Brain-Network Analysis toolkit: a maintained, tidy layer over bctpy and friends"
+readme = "README.md"
+license = "GPL-3.0-or-later"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [{ name = "Jieyuan ZHANG" }]
+keywords = ["neuroscience", "connectomics", "graph-theory", "brain-networks", "bctpy"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering",
+]
+dependencies = [
+  "bctpy>=0.6.1",
+  "numpy>=1.24",
+  "scipy>=1.10",
+  "pandas>=2.0",
+  "networkx>=3.0",
+]
+
+[project.optional-dependencies]
+neuro = ["netneurotools>=0.3.0", "nilearn>=0.10"]
+dev = ["pytest>=8", "pytest-cov>=5", "ruff>=0.6", "mypy>=1.10"]
+
+[project.urls]
+Homepage = "https://github.com/EricZhang1412/BNA-toolkit"
+Issues = "https://github.com/EricZhang1412/BNA-toolkit/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/bna_toolkit"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+filterwarnings = ["ignore::DeprecationWarning:bct.*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "NPY", "W"]
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true
